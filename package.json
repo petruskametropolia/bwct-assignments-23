@@ -1,0 +1,19 @@
+{
+  "name": "bwct-assignments-23",
+  "version": "0.0.1",
+  "description": "test",
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "docs": "mkdir docs && touch docs/readme.md",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "petruska <petruska@metropolia.fi>",
+  "license": "ISC"
+}
