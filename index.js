@@ -8,9 +8,11 @@ app.use(express.static('public'));
 app.set('view engine', 'pug');
 
 app.get('/', (req,res) => {
-    const username = 'Käyttähän nimi';
-    const description = 'Aku ankka';
-    const content = {title: username, description};
+    const username = 'Click on the cat';
+    const description = 'Name';
+    const p1 = 'Age: 7';
+    const p2 = 'Weight 5kg';
+    const content = {title: username, description, p1, p2};
 res.render('index', content);
 });
 
