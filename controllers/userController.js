@@ -27,13 +27,21 @@ const getUser = (req, res) => {
        // res.status(404).send('Not found')
        res.status(404).json({message: 'User not found'});
     }
-    const user = filteredUsers[0];
+    //const user = filteredUsers[0];
    
    // res.send('From this endpoint you can get a user with id: ' + req.params.userId);
   }
 
   const postUser  = (req, res) => {
-    res.send('From this endpoint you can add users.')
+    console.log('req body: ', req.body);
+    const newUser = 
+    {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.passwd
+    };
+    users.push(newUser);
+    res.status(201).send('Added user ' + req.body.name);
   };
 
   const putUser = (req, res) => {
