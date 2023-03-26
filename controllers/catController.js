@@ -2,48 +2,64 @@
 // catController
 const catModel = require('../models/catModel');
 
-const cats = catModel.cats;
-
 const getCatList = async (req, res) => {
-     const cats = await catModel.getAllCats();
+  try {
+    const cats = await catModel.getAllCats();
+    //console.log(cats);
     res.json(cats);
-    //res.send('From this endpoint you can get cats.');
+  } catch (error) {
+    res.status(500).json({error: 500, message: error.message});
+  }
 };
 
-const getCat = (req, res) => {
-    //console.log(req.params);
-    const id = req.params.catId;
-    const filteredCats = cats .filter(cat => id == cat.id);
-
-    //console.log(filteredCats);
-    //todo, filter matching cat based on id
-    // todo , response 404 if id not found in array
-    if(filteredCats.length > 0){
-        res.json(filteredCats[0]);
-    } else {
-       // res.status(404).send('Not found')
-       res.status(404).json({message: 'Cat not found'});
-    }
-    //const cat = filteredCats[0];
-   
-   // res.send('From this endpoint you can get a cat with id: ' + req.params.catId);
+const getCat = async (req, res) => {
+  //console.log(req.params);
+  // convert id value to number
+  const catId = Number(req.params.catId);
+  // check if number is not an integer
+  if (!Number.isInteger(catId)) {
+    res.status(400).json({error: 500, message: 'invalid id'});
+    return;
   }
+  // TODO: wrap to try-catch
+  const [cat] = await catModel.getCatById(catId);
+  console.log('getCat', cat);
+  if (cat) {
+    res.json(cat);
+  } else {
+    // send response 404 if id not found in array 
+    // res.sendStatus(404);
+    res.status(404).json({message: 'Cat not found.'})
+  }
+};
 
-  const postCat  = (req, res) => {
-    console.log('posting a cat', req.body, req.file);
-    const newCat = req.body;
-    newCat.filename  = 'http://localhost:3000/uploads/' + req.file.path;
-    cats.push(newCat);
-    res.status(201).send('new cat added!');
-  };
+const postCat = async (req, res) => {
+  console.log('posting a cat', req.body, req.file);
+  const newCat = req.body;
+  newCat.filename = req.file.filename;
+  // TODO: add try-catch
+  const result = await catModel.insertCat(newCat);
+  // Todo send correct json response if upload successful
+  res.status(201).send('new cat added!');
+};
 
-  const putCat = (req, res) => {
-    res.send('From this endpoint you can modify cats.')
-  };
 
-  const deleteCat = (req, res) => {
-    res.send('From this endpoint you can delete cats.')
-  };
+const putCat = async (req, res) => {
+  console.log('modifying a cat', req.body);
+  // TODO: add try-catch
+  const cat = req.body;
+  const result = await catModel.modifyCat(cat);
+  // TODO: send correct json response if update successful
+  res.status(200).send('cat modified!');
+};
+
+const deleteCat = async (req, res) => {
+  console.log('deleting a cat', req.params.catId);
+  // TODO: add try-catch
+  const result = await catModel.deleteCat(req.params.catId);
+  // TODO: send correct json response if delete successful
+  res.status(200).send('cat deleted!');
+};
 
 const catController = {getCatList, getCat, postCat, putCat, deleteCat};
 module.exports = catController;

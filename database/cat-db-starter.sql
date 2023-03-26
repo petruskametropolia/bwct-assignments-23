@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS catdb_dev;
-CREATE DATABASE catdb_dev;
-USE catdb_dev;
+DROP DATABASE IF EXISTS catdb;
+CREATE DATABASE catdb;
+USE catdb;
 
 CREATE TABLE `wop_cat` (
   `cat_id` int(11) NOT NULL,
