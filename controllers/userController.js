@@ -2,17 +2,16 @@
 // userController
 const userModel = require('../models/userModel');
 
-// TODO: add DB connection and functions to userModel
-const users = userModel.users;
-// remove passwords
-for (const user of users) {
-  delete user.password;
-}
-
-const getUserList = (req, res) => {
-  res.json(users);
+const getUserList = async (req, res) => {
+  try {
+    const users = await userModel.getAllUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
 };
 
+// TODO: update for new user model (check cat controller for example)
 const getUser = (req, res) => {
   //console.log(req.params);
   const id = req.params.userId;
@@ -27,6 +26,7 @@ const getUser = (req, res) => {
   }
 };
 
+// TODO: update for new user model
 const postUser = (req, res) => {
   console.log('req body: ', req.body);
   const newUser = 
@@ -35,7 +35,7 @@ const postUser = (req, res) => {
     email: req.body.email,
     password: req.body.passwd
   };
-  users.push(newUser);
+  //users.push(newUser);
   res.status(201).send('Added user ' + req.body.name);
 };
 

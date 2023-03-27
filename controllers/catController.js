@@ -4,8 +4,13 @@ const catModel = require('../models/catModel');
 
 const getCatList = async (req, res) => {
   try {
-    const cats = await catModel.getAllCats();
-    //console.log(cats);
+    let cats = await catModel.getAllCats();
+    // convert ISO date to date only
+    // should this be done on the front-end side??
+    cats = cats.map(cat => {
+      cat.birthdate = cat.birthdate.toISOString().split('T')[0];
+      return cat;
+    });
     res.json(cats);
   } catch (error) {
     res.status(500).json({error: 500, message: error.message});
@@ -15,7 +20,7 @@ const getCatList = async (req, res) => {
 const getCat = async (req, res) => {
   //console.log(req.params);
   // convert id value to number
-  const catId = Number(req.params.catId);
+  const catId = Number(req.params.id);
   // check if number is not an integer
   if (!Number.isInteger(catId)) {
     res.status(400).json({error: 500, message: 'invalid id'});
@@ -34,31 +39,36 @@ const getCat = async (req, res) => {
 };
 
 const postCat = async (req, res) => {
-  console.log('posting a cat', req.body, req.file);
+ // console.log('posting a cat', req.body, req.file);
   const newCat = req.body;
   newCat.filename = req.file.filename;
-  // TODO: add try-catch
-  const result = await catModel.insertCat(newCat);
-  // Todo send correct json response if upload successful
-  res.status(201).send('new cat added!');
+  try {
+    const result = await catModel.insertCat(newCat);
+    res.status(201).json({message: 'new cat added!'});
+  } catch (error) {
+    res.status(500).json({error: 500, message: error.message});
+  }
 };
 
-
 const putCat = async (req, res) => {
-  console.log('modifying a cat', req.body);
-  // TODO: add try-catch
+ // console.log('modifying a cat', req.body);
   const cat = req.body;
-  const result = await catModel.modifyCat(cat);
-  // TODO: send correct json response if update successful
-  res.status(200).send('cat modified!');
+  try {
+    const result = await catModel.modifyCat(cat);
+    res.status(200).json({message: 'cat modified!'});
+  } catch (error) {
+    res.status(500).json({error: 500, message: error.message});
+  }
 };
 
 const deleteCat = async (req, res) => {
-  console.log('deleting a cat', req.params.catId);
-  // TODO: add try-catch
-  const result = await catModel.deleteCat(req.params.catId);
-  // TODO: send correct json response if delete successful
-  res.status(200).send('cat deleted!');
+//  console.log('deleting a cat', req.params.id);
+  try {
+    const result = await catModel.deleteCat(req.params.id);
+    res.status(200).json({message: 'cat deleted!'});
+  } catch (error) {
+    res.status(500).json({error: 500, message: error.message});
+  }
 };
 
 const catController = {getCatList, getCat, postCat, putCat, deleteCat};
