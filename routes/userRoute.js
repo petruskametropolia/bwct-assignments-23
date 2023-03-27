@@ -12,7 +12,7 @@ const upload = multer({dest: 'uploads/'});
 
 router.get('/',userController.getUserList);
 router.route('/')
-.post(upload.single('cat'), catController.postCat)
+.post(upload.single('user'), userController.postUser)
 router.get('/user/',userController.getUser);
 router.post('/', userController.postUser);
 

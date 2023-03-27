@@ -12,14 +12,24 @@ const getUserList = async (req, res) => {
 };
 
 // TODO: update for new user model (check cat controller for example)
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   //console.log(req.params);
-  const id = req.params.userId;
+  const id = Number(req.params.userId);
   // filter matching user(s) based on id
-  const filteredUsers = users.filter(user => id == user.id);
-  if (filteredUsers.length > 0) {
-    res.json(filteredUsers[0]);
-  } else {
+if(!Number.isInteger(userId)){
+  res.status(400).json({error: 500, message: 'invalid id'});
+  return;
+}
+
+const [user] = await userModel.getUserById(userId);
+
+  //const filteredUsers = users.filter(user => id == user.id);
+
+  //if (filteredUsers.length > 0) {
+   // res.json(filteredUsers[0]);
+if (user){
+  res.json(user);
+  } else{
     // send response 404 if id not found in array 
     // res.sendStatus(404);
     res.status(404).json({message: 'User not found.'})
