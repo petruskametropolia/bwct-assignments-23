@@ -77,4 +77,5 @@ const getCat = async () => {
     console.log(e.message);
   }
 };
+
 getCat();

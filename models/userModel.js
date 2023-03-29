@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
   try {
-    const sql = `SELECT user_id, name, email FROM wop_user`;
+    const sql = `SELECT wop_user.* FROM wop_user`;
     const [rows] = await promisePool.query(sql);
     // console.log(rows);
     return rows;
@@ -31,7 +31,7 @@ const getUserById = async (id) => {
 
 const insertUser = async (user) => {
   try {
-    const sql = `INSERT INTO wop_user VALUES (?, ?, ?);`;
+    const sql = `INSERT INTO wop_user VALUES (?, ?, ?,?);`;
     const [rows] = await promisePool.query(sql, [
       null, // id is auto_increment
       user.name,
