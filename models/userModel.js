@@ -14,8 +14,39 @@ const getAllUsers = async () => {
   }
 };
 
+const getUserById = async (user_id) => {
+  try {
+    const sql = `SELECT wop_user.* FROM wop_user
+                WHERE user_id = ?`;
+    const [rows] = await promisePool.query(sql, [user_id]);
+    // console.log(rows);
+    return rows;
+  } catch (e) {
+    console.error('error', e.message);
+    throw new Error('sql query failed');
+  }
+};
+
+const insertUser = async (user) => {
+  try {
+    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?);`;
+    const [rows] = await promisePool.query(sql, [
+      null, // id is auto_increment
+      user.name,
+      user.email,
+      user.password,
+    ]);
+    // console.log(rows);
+    return rows;
+  } catch (e) {
+    console.error('error', e.message);
+    throw new Error('sql insert user failed');
+  }
+};
+
+
 // TODO: add sql function for get/:id, put & post queries
 
 module.exports = {
-  getAllUsers,
+  getAllUsers,getUserById,insertUser,
 };
