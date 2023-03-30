@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
   try {
-    const sql = `SELECT wop_user.* FROM wop_user`;
+    const sql = `SELECT user_id, name, email FROM wop_user`;
     const [rows] = await promisePool.query(sql);
     // console.log(rows);
     return rows;
@@ -13,11 +13,12 @@ const getAllUsers = async () => {
     throw new Error('sql query failed');
   }
 };
-const getUserById = async (id) => {
+
+const getUserById = async (user_id) => {
   try {
     const sql = `SELECT wop_user.* FROM wop_user
                 WHERE user_id = ?`;
-    const [rows] = await promisePool.query(sql, [id]);
+    const [rows] = await promisePool.query(sql, [user_id]);
     // console.log(rows);
     return rows;
   } catch (e) {
@@ -26,12 +27,9 @@ const getUserById = async (id) => {
   }
 };
 
-
-
-
 const insertUser = async (user) => {
   try {
-    const sql = `INSERT INTO wop_user VALUES (?, ?, ?,?);`;
+    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?);`;
     const [rows] = await promisePool.query(sql, [
       null, // id is auto_increment
       user.name,
@@ -42,28 +40,13 @@ const insertUser = async (user) => {
     return rows;
   } catch (e) {
     console.error('error', e.message);
-    throw new Error('sql insert cat failed');
+    throw new Error('sql insert user failed');
   }
 };
 
-const modifyUser = async (user) => {
-  try {
-    const sql = `UPDATE wop_user SET name=?, email=?
-                WHERE user_id=?`;
-    const [rows] = await promisePool.query(sql, [
-      user.name,
-      user.email,
-    ]);
-    // console.log(rows);
-    return rows;
-  } catch (e) {
-    console.error('error', e.message);
-    throw new Error('sql update cat failed');
-  }
-};
 
 // TODO: add sql function for get/:id, put & post queries
 
 module.exports = {
-  getAllUsers,insertUser,modifyUser,getUserById,
+  getAllUsers,getUserById,insertUser,
 };
