@@ -24,4 +24,6 @@ userController.postUser
 router.route('/:userId')
   .get(userController.getUser)
 
+  router.get('/token', userController.checkToken);
+
 module.exports = router;
