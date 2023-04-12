@@ -16,6 +16,7 @@ app.use(express.static('example-ui'));
 app.use('/uploads', express.static('uploads'));
 
 app.use(cors());
+app.use('/thumbnails', express.static('thumbnails'));
 
 
 app.use(express.json());

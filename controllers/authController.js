@@ -8,24 +8,26 @@ const login = (req, res) => {
     if (err || !user) {
       console.log('auth error', info);
       return res.status(401).json({
-        message: 'Username / password wrong',
-        // or more detailed message:
-        //message: info.message,
+        message: 'Wrong username or password',
+        
       });
     }
     req.login(user, {session: false}, (err) => {
       if (err) {
         res.json({message: err});
       } 
-      // generate a signed son web token with the contents of user object and return it in the response
-      const token = jwt.sign(user, process.env.JWT_SECRET);
-      // TODO: do you really need to include whole user to token payload?
-      // NOTE: at least password should removed
+      // generate a signed json web token with the user id in payload and return it in the response
+      const token = jwt.sign({user_id: user.user_id}, process.env.JWT_SECRET);
       return res.json({user, token});
     });
   })(req, res);
 };
 
+const logout = (req, res) => {
+  res.json({message: 'Logged out!'});
+};
+
 module.exports = {
   login,
+  logout,
 };

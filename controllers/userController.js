@@ -37,17 +37,33 @@ if (user){
 };
 
 // TODO: update for new user model
-const postUser = (req, res) => {
-  console.log('req body: ', req.body);
-  const newUser = 
-  {
+const postUser = async (req, res) => {
+  console.log('Creating a new user: ', req.body);
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.passwd, salt);
+  const newUser = {
     name: req.body.name,
     email: req.body.email,
-    password: req.body.passwd
+    password: password,
+    role: 1, // default user role (normal user)
   };
-  //users.push(newUser);
-  res.status(201).send('Added user ' + req.body.name);
+  const errors = validationResult(req);
+  console.log('validation errors', errors);
+  if (errors.isEmpty()) {
+    try {
+      const result = await userModel.insertUser(newUser);
+      res.status(201).json({message: 'user created', userId: result});
+    } catch (error) {
+      res.status(500).json({message: error.message});
+    }
+  } else {
+    res.status(400).json({
+      message: 'user creation failed',
+      errors: errors.array(),
+    });
+  }
 };
+
 
 const putUser = (req, res) => {
   res.send('With this endpoint you can modify a user');

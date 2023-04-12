@@ -5,6 +5,7 @@ const {getUserLogin, getUserById} = require('../models/userModel');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
+const bcrypt = require('bcryptjs');
 
 require('dotenv').config();
 
@@ -18,7 +19,8 @@ passport.use(
       if (user === undefined) {
         return done(null, false, {message: 'Incorrect email.'});
       }
-      if (user.password !== password) {
+      const loginOK = await bcrypt.compare(password, user.password);
+      if (!loginOK) {
         return done(null, false, {message: 'Incorrect password.'});
       }
       // use spread syntax to create shallow copy to get rid of binary row type
@@ -30,8 +32,7 @@ passport.use(
   })
 );
 
-// TODO: JWT strategy for handling bearer token
-// consider .env for secret, e.g. secretOrKey: process.env.JWT_SECRET
+// JWT strategy for handling bearer token
 passport.use(
   new JWTStrategy(
     {
@@ -39,16 +40,15 @@ passport.use(
       secretOrKey: process.env.JWT_SECRET,
     },
     async (jwtPayload, done) => {
-      // Get user data from DB using userModel 
+      
       console.log('user from token', jwtPayload);
       try {
         const user = await getUserById(jwtPayload.user_id);
         return done(null, user);
       } catch (error) {
-        return done(err);
+        return done(error);
       }
-      // (or extract data from token, note: user data in token might be outdated) 
-      // return done(null, jwtPayload);
+      
 
     }
   )
