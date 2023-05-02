@@ -1,0 +1,107 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin-left: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.forms {
+  display: flex;
+  justify-content: center;
+}
+
+.form-wrapper {
+  max-width: 600px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-wrapper h3 {
+  margin-top: 0;
+}
+
+.form-wrapper input,
+.form-wrapper select {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-wrapper button[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.form-wrapper button[type="submit"]:hover {
+  background-color: #555;
+}
+
+/* Specific styles for front.html */
+#list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+#list li img {
+  float: left;
+  margin-right: 10px;
+}
+
+#list li h2 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+#list li p {
+  margin-top: 0;
+}
+
+/* Specific styles for add-cat.html */
+.add-owner {
+  width: 100%;
+}

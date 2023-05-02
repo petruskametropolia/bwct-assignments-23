@@ -30,7 +30,7 @@ main {
 }
 
 .btn {
-    background-color: #4CAF50;
+    background-color:#0000ff;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -41,5 +41,5 @@ main {
 }
 
 .btn:hover {
-    background-color: #3e8e41;
+    background-color: #0000ff;
 }

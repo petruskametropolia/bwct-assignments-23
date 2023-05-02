@@ -40,7 +40,7 @@ body {
   }
   
   input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #0000ff;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -52,7 +52,7 @@ body {
   }
   
   a {
-    color: #4CAF50;
+    color: #0000ff;
     display: block;
     margin-top: 20px;
     text-align: center;
@@ -74,5 +74,5 @@ body {
   }
   
   .signup-form input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #0000ff;
   }

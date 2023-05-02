@@ -10,6 +10,10 @@ CREATE TABLE `wop_cat` (
   `filename` text NOT NULL,
   `birthdate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `posts` ( `description` text NOT NULL,`image` text NOT NULL,`likes` int(11) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `posts` (`description`, `image`, `likes`) VALUES('Frank','http://placekitten.com/400/300', 1)
+(2, 'Jessie', 3.5, 3, 'http://placekitten.com/400/302', '2020-11-03'),
+(3, 'Garfield', 11, 2, 'http://placekitten.com/400/304', '1978-02-12');
 
 INSERT INTO `wop_cat` (`cat_id`, `name`, `weight`, `owner`, `filename`, `birthdate`) VALUES
 (1, 'Frank', 5, 1, 'http://placekitten.com/400/300', '2010-08-04'),

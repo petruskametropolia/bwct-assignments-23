@@ -6,8 +6,9 @@ const router = express.Router();
 const catController = require('../controllers/catController');
 const {body} = require('express-validator');
 
+
 const fileFilter = (req,file,cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png'];
+   const allowedTypes = ['image/jpeg', 'image/png'];
 if(allowedTypes.includes(file.mimetype)){
     cb(null, true);
 } else {
@@ -16,6 +17,7 @@ if(allowedTypes.includes(file.mimetype)){
 };
 
 const upload = multer({dest: 'uploads/', fileFilter: fileFilter});
+
 
 router.route('/')
 .get(catController.getCatList)

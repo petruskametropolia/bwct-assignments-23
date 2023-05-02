@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1>Login</h1>
-  <form method="POST" action="/login">
+  <form method="POST" action="/login" onsubmit="redirectToFrontPage(event)">
     <label>Username:</label>
     <input type="text" name="username">
     <br>
@@ -17,5 +17,12 @@
   </form>
   <br>
   <a href="signup.html">Don't have an account? Sign up here.</a>
+
+  <script>
+    function redirectToFrontPage(event) {
+      event.preventDefault(); // prevent the form from submitting normally
+      window.location.href = '/ui8/front.html'; // redirect to the desired page
+    }
+  </script>
 </body>
 </html>

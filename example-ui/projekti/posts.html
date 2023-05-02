@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Posts</title>
+    <link rel="stylesheet" type="text/css" href="/css/posts.css">
+  </head>
+  <body>
+    <header>
+      <h1>Posts</h1>
+    </header>
+    <main>
+      <form enctype="multipart/form-data" action="/posts" method="POST">
+        <h2>Create a Post</h2>
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+        <br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+        <br>
+        <button type="submit">Create Post</button>
+      </form>
+      <div id="posts">
+        {{#each posts}}
+        <div class="post">
+          <img src="{{this.image}}">
+          <p>{{this.description}}</p>
+          <div class="likes">
+            <form action="/like/{{this.id}}" method="POST">
+              <button type="submit">Like</button>
+            </form>
+            <p>{{this.likes}} Likes</p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </main>
+    <script>
+    function displayPosts() {
+      fetch('/posts')
+        .then(response => response.json())
+        .then(posts => {
+          const postContainer = document.getElementById('posts');
+          postContainer.innerHTML = '';
+    
+          posts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+    
+            const imageElement = document.createElement('img');
+            imageElement.src = post.image;
+            postElement.appendChild(imageElement);
+    
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = post.description;
+            postElement.appendChild(descriptionElement);
+    
+            const likesElement = document.createElement('div');
+            likesElement.className = 'likes';
+    
+            const likeButton = document.createElement('button');
+            likeButton.textContent = 'Like';
+            likeButton.addEventListener('click', () => {
+              fetch(`/like/${post.id}`, { method: 'POST' })
+                .then(() => displayPosts());
+            });
+            likesElement.appendChild(likeButton);
+    
+            const likesCount = document.createElement('span');
+            likesCount.textContent = post.likes;
+            likesElement.appendChild(likesCount);
+    
+            postElement.appendChild(likesElement);
+    
+            postContainer.appendChild(postElement);
+          });
+        });
+    }
+    
+    displayPosts();
+    </script>
+  </body>
+</html>
