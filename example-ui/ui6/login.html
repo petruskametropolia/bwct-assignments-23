@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <h1>Login</h1>
+  <form method="POST" action="/login" >
+    <label>Username:</label>
+    <input type="text" name="username">
+    <br>
+    <label>Password:</label>
+    <input type="password" name="password">
+    <br>
+    <input type="submit" value="Login">
+  </form>
+  <br>
+  <a href="signup.html">Don't have an account? Sign up here.</a>
+
+  <script>
+    //function redirectToFrontPage(event) {
+     // event.preventDefault(); // prevent the form from submitting normally
+    //  window.location.href = '/ui2/front.html'; // redirect to the desired page
+  //  }
+ 
+    
+    const flashMessage = document.getElementById('flash-message');
+
+    if (flashMessage) {
+      alert(flashMessage.textContent);
+    }
+  
+  </script>
+</body>
+</html>
