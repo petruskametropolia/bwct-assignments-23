@@ -50,11 +50,10 @@ router.post('/like/:id', async (req, res) => {
     try {
       const catId = req.params.id;
   
-      // Update the like count in the `wop_cat` table
+      // Updates the like count in the wop_cat table
       const updateQuery = `UPDATE wop_cat SET likes = likes + 1 WHERE cat_id = ?`;
       await db.query(updateQuery, [catId]);
   
-      // Fetch the updated cat information from the database
       const selectQuery = `SELECT * FROM wop_cat WHERE cat_id = ?`;
       const result = await db.query(selectQuery, [catId]);
   

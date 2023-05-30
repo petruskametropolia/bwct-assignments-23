@@ -52,12 +52,12 @@ app.post('/login', (req, res) => {
       }
   
       if (results.length > 0) {
-        // Login successful, redirect to desired page
+        // Login successful
         return res.redirect('/ui2/front.html');
       } else {
         req.flash('error', 'Incorrect username or password.');
   
-        // Execute client-side JavaScript to show pop-up message
+        // pop-up epäonnistuneelle kirjautumiselle
         const script = `
           <script>
             alert('Incorrect username or password.');

@@ -29,7 +29,6 @@ const createCatCards = (cats) => {
     const p3 = document.createElement('p');
     p3.innerHTML = `Owner: ${cat.ownername}`;
 
-    // like button
     const likeButton = document.createElement('button');
     likeButton.innerHTML = 'Like';
     likeButton.classList.add('button');
@@ -46,17 +45,15 @@ const createCatCards = (cats) => {
       }
     });
 
-    // like count
     const likeCount = document.createElement('span');
     likeCount.innerHTML = `Likes: ${cat.likes}`;
 
-    // modify button
+  
     const modButton = document.createElement('a');
     modButton.innerHTML = 'Modify';
     modButton.href = `modify-cat.html?id=${cat.cat_id}`;
     modButton.classList.add('button');
 
-    // delete selected cat
     const delButton = document.createElement('button');
     delButton.innerHTML = 'Delete';
     delButton.classList.add('button');
