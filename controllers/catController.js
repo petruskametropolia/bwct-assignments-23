@@ -35,7 +35,7 @@ const getCat = async (req, res) => {
   } else {
     // send response 404 if id not found in array 
     // res.sendStatus(404);
-    res.status(404).json({message: 'Cat not found.'})
+    res.status(404).json({message: 'Pet not found.'})
   }
 };
 
@@ -56,7 +56,7 @@ return;
   newCat.filename = req.file.filename;
   try {
     const result = await catModel.insertCat(newCat);
-    res.status(201).json({message: 'new cat added!'});
+    res.status(201).json({message: 'new pet added!'});
   } catch (error) {
     res.status(500).json({error: 500, message: error.message});
   }
@@ -73,7 +73,7 @@ return;
 const cat = req.body;
   try {
     const result = await catModel.modifyCat(cat);
-    res.status(200).json({message: 'cat modified!'});
+    res.status(200).json({message: 'pet modified!'});
   } catch (error) {
     res.status(500).json({error: 500, message: error.message});
   }
@@ -83,7 +83,7 @@ const deleteCat = async (req, res) => {
 //  console.log('deleting a cat', req.params.id);
   try {
     const result = await catModel.deleteCat(req.params.id);
-    res.status(200).json({message: 'cat deleted!'});
+    res.status(200).json({message: 'pet deleted!'});
   } catch (error) {
     res.status(500).json({error: 500, message: error.message});
   }

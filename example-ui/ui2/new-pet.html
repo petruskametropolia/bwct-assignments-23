@@ -9,25 +9,26 @@
 
 <body>
     <div class="container">
-        <header>
-            <h1 class="title">Pet Uploading Website</h1>
-        </header>
         <nav>
             <ul>
                 <li><a href="front.html">Frontpage</a></li>
                 <li><a href="add-cat.html">Add pet</a></li>
                 <li><a href="new-pet.html">Browse dog breeds</a></li>
                 <li><a href="/ui6/login.html">Log out</a></li>
-
             </ul>
         </nav>
-        <h1>List of pets</h1>
-        <ul id="list">
-            <!-- js creates list here -->
-        </ul>
+        <h1>Dog breeds</h1>
+            <form id="search-form">
+            <select id="breed-select" name="q" required>
+            <option value="">Select a breed</option>
+            </select>
+             <button type="submit">Search</button>
+            </form>
+            <div id="results"></div>
     </div>
     <script src="./js/serialize.js"></script>
     <script src="./js/front.js"></script>
+    <script src="./js/new-pet.js"></script>
 </body>
 
 </html>

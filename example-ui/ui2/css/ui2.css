@@ -148,3 +148,8 @@ li:last-child {
   display: table;
   clear: both;
 }
+.breed-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
