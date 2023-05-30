@@ -29,6 +29,23 @@ const createCatCards = (cats) => {
     const p3 = document.createElement('p');
     p3.innerHTML = `Owner: ${cat.ownername}`;
 
+    // like button
+    const likeButton = document.createElement('button');
+    likeButton.innerHTML = 'Like';
+    likeButton.classList.add('button');
+    likeButton.addEventListener('click', async () => {
+      try {
+        const response = await fetch(url + '/cat/like/' + cat.cat_id, {
+          method: 'POST'
+        });
+        const json = await response.json();
+        console.log('like response', json);
+        getCat();
+      } catch (e) {
+        console.log(e.message);
+      }
+    });
+
     // modify button
     const modButton = document.createElement('a');
     modButton.innerHTML = 'Modify';
@@ -61,12 +78,12 @@ const createCatCards = (cats) => {
     li.appendChild(p1);
     li.appendChild(p2);
     li.appendChild(p3);
+    li.appendChild(likeButton);
     li.appendChild(modButton);
     li.appendChild(delButton);
     ul.appendChild(li);
   });
 };
-
 // AJAX call
 const getCat = async () => {
   try {

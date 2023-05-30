@@ -5,6 +5,19 @@ const multer = require('multer');
 const router = express.Router();
 const catController = require('../controllers/catController');
 const {body} = require('express-validator');
+const mysql = require('mysql2');
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'dbuser',
+    password: 'test123',
+    database: 'catdb'
+  });
+
+  db.connect((err) => {
+    if (err) throw err;
+   // console.log('Connected to database!');
+  });
 
 const fileFilter = (req,file,cb) => {
     const allowedTypes = ['image/jpeg', 'image/png'];
@@ -33,7 +46,30 @@ body('name').isAlphanumeric().isLength({min: 1, max: 200}),
     body('owner').isInt({min: 1}),
 catController.putCat)
 
-
+router.post('/like/:id', async (req, res) => {
+    try {
+      const catId = req.params.id;
+  
+      // Update the like count in the `wop_cat` table
+      const updateQuery = `UPDATE wop_cat SET likes = likes + 1 WHERE cat_id = ?`;
+      await db.query(updateQuery, [catId]);
+  
+      // Fetch the updated cat information from the database
+      const selectQuery = `SELECT * FROM wop_cat WHERE cat_id = ?`;
+      const result = await db.query(selectQuery, [catId]);
+  
+      if (result.length === 0) {
+        res.status(404).json({ error: 'Cat not found' });
+      } else {
+        const cat = result[0];
+        res.json(cat);
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
 router.route('/:id')
 .get(catController.getCat)
 .delete(catController.deleteCat);
