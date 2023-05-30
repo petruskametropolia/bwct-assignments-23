@@ -33,7 +33,7 @@ const getCatById = async (id) => {
 
 const insertCat = async (cat) => {
   try {
-    const sql = `INSERT INTO wop_cat VALUES (?, ?, ?, ?, ?, ?);`;
+    const sql = `INSERT INTO wop_cat VALUES (?, ?, ?, ?, ?, ?, ?);`;
     const [rows] = await promisePool.query(sql, [
       null, // id is auto_increment
       cat.name,
@@ -41,6 +41,7 @@ const insertCat = async (cat) => {
       cat.owner,
       cat.filename,
       cat.birthdate,
+      0,
     ]);
     // console.log(rows);
     return rows;

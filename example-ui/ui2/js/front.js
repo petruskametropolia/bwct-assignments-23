@@ -46,6 +46,10 @@ const createCatCards = (cats) => {
       }
     });
 
+    // like count
+    const likeCount = document.createElement('span');
+    likeCount.innerHTML = `Likes: ${cat.likes}`;
+
     // modify button
     const modButton = document.createElement('a');
     modButton.innerHTML = 'Modify';
@@ -71,7 +75,7 @@ const createCatCards = (cats) => {
     });
 
     const li = document.createElement('li');
-    li.classList.add('light-border');
+    li.classList.add('light-border', 'clearfix');
 
     li.appendChild(h2);
     li.appendChild(figure);
@@ -79,6 +83,7 @@ const createCatCards = (cats) => {
     li.appendChild(p2);
     li.appendChild(p3);
     li.appendChild(likeButton);
+    li.appendChild(likeCount);
     li.appendChild(modButton);
     li.appendChild(delButton);
     ul.appendChild(li);
